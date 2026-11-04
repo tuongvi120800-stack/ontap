@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ôn tập Buổi 1–3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=LXGW+WenKai+TC:wght@400;700&display=swap">
+<style>
+/* Layout: lesson "book" for projector — one long scroll, chapters per tiết, sticky chapter rail on wide screens,
+   fixed tool strip (pinyin / nghĩa / cỡ chữ / gọi số / giờ). Light-only, breakfast-shop palette. */
+:root{
+  color-scheme:light;
+  --paper:#FFF8EC; --card:#FFFFFF; --ink:#2A1E14; --muted:#7A6A58; --line:#EADCC6;
+  --red:#C7361F; --red-t:#FBE6DF; --green:#2E7D4F; --green-t:#E3F2E8; --blue:#1F5FA8; --blue-t:#E6EFF9; --yolk:#F2B632; --yolk-t:#FFF1CC; --board:#23392C;
+  --f-ui:"Be Vietnam Pro","Noto Sans TC",system-ui,sans-serif;
+  --f-zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --f-kai:"LXGW WenKai TC","BiauKai","DFKai-SB","Noto Sans TC",serif;
+  --z:1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);margin:0;font-size:calc(18px*var(--z));line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--red)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1,h2,h3{margin:0;text-wrap:balance}
+[hidden]{display:none!important}
+.r{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;line-height:1.25;margin:0 .04em}
+.r i{font-style:normal;font-family:var(--f-ui);font-size:.46em;color:var(--blue);font-weight:500;letter-spacing:0;white-space:nowrap;line-height:1.3}
+.r.p{margin:0}
+.nopy .r i{display:none}
+.novi .vi{display:none}
+.zh{font-family:var(--f-zh)}
+
+/* top strip */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--red);color:#fff;box-shadow:0 2px 0 #9E2614}
+.top .in{display:flex;align-items:center;gap:10px;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));max-width:1500px;margin:0 auto}
+.sign{font-family:var(--f-kai);font-weight:700;font-size:26px;letter-spacing:.12em;white-space:nowrap}
+.sign small{font-family:var(--f-ui);font-size:13px;letter-spacing:0;font-weight:600;opacity:.85;margin-left:8px}
+.tools{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tool{border:0;border-radius:8px;padding:6px 10px;font-size:14px;font-weight:700;background:rgba(255,255,255,.16);color:#fff;white-space:nowrap}
+.tool[aria-pressed="true"]{background:#fff;color:var(--red)}
+.chips{display:none;gap:6px;overflow-x:auto;padding:0 max(16px,env(safe-area-inset-left,0px)) 8px;scrollbar-width:none}
+.chips a{flex:none;color:#fff;text-decoration:none;font-size:13px;font-weight:700;background:rgba(255,255,255,.16);border-radius:999px;padding:4px 10px}
+
+/* layout */
+.wrap{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:230px 1fr;gap:28px;padding:20px max(16px,env(safe-area-inset-right,0px)) 80px max(16px,env(safe-area-inset-left,0px))}
+.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);align-self:start;max-height:calc(100vh - 90px);overflow:auto;font-size:14px}
+.rail h4{margin:14px 0 4px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
+.rail a{display:block;color:var(--ink);text-decoration:none;padding:4px 8px;border-radius:6px}
+.rail a:hover,.rail a.on{background:var(--yolk-t)}
+main{min-width:0;display:grid;gap:26px}
+@media (max-width:999px){.wrap{grid-template-columns:1fr}.rail{display:none}.chips{display:flex}.sign small{display:none}}
+
+/* chapter + blocks */
+.chap{display:grid;gap:18px;padding-top:6px}
+.chap>header{display:flex;align-items:baseline;gap:14px;border-bottom:3px dashed var(--line);padding-bottom:8px}
+.chap>header .t{background:var(--ink);color:var(--yolk);font-weight:800;border-radius:8px;padding:4px 12px;font-size:16px}
+.chap>header h2{font-family:var(--f-kai);font-size:calc(34px*var(--z))}
+.chap>header p{margin:0 0 0 auto;color:var(--muted);font-size:15px}
+.blk{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:clamp(16px,2vw,26px);display:grid;gap:14px;min-width:0;box-shadow:0 2px 0 var(--line)}
+.blk>.hd{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.blk>.hd h3{font-size:calc(24px*var(--z))}
+.badge{font-weight:800;font-size:13px;border-radius:6px;padding:3px 9px;background:var(--yolk);color:var(--ink)}
+.badge.r{background:var(--red);color:#fff}.badge.g{background:var(--green);color:#fff}.badge.b{background:var(--blue);color:#fff}
+.min{margin-left:auto;color:var(--muted);font-weight:600;font-size:14px}
+.how{margin:0;color:var(--muted);font-size:calc(16px*var(--z))}
+.btn{border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:7px 14px;font-weight:700;font-size:15px}
+.btn.p{background:var(--red);border-color:var(--red);color:#fff}
+.btn.g{background:var(--green);border-color:var(--green);color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.say{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);display:inline-grid;place-items:center;flex:none;vertical-align:middle}
+.say svg{width:18px;height:18px}
+.vi{color:var(--muted);font-size:calc(16px*var(--z))}
+.big{font-family:var(--f-zh);font-size:calc(30px*var(--z));line-height:2.1}
+.mid{font-family:var(--f-zh);font-size:calc(26px*var(--z));line-height:2.05}
+.ans{font-family:var(--f-zh);font-size:calc(24px*var(--z));line-height:2;color:var(--green);background:var(--green-t);border-radius:10px;padding:4px 12px}
+
+/* items */
+.list{display:grid;gap:0}
+.it{display:grid;grid-template-columns:44px 1fr auto;gap:4px 12px;align-items:start;padding:12px 0;border-bottom:1px dashed var(--line)}
+.it:last-child{border-bottom:0}
+.it .n{width:36px;height:36px;border-radius:50%;background:var(--yolk-t);color:#7A5300;font-weight:800;display:grid;place-items:center;margin-top:10px}
+.it .body{display:grid;gap:4px;min-width:0}
+.it .act{display:flex;gap:6px;align-items:center;margin-top:8px}
+.it .ans{grid-column:2/-1;justify-self:start}
+
+/* vocab */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:12px}
+.vc{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:6px;background:linear-gradient(var(--card),var(--card)) padding-box}
+.vc .w{display:flex;align-items:center;gap:10px}
+.vc .w .hz{font-family:var(--f-kai);font-size:calc(40px*var(--z));line-height:1.9}
+.vc .w .m{font-weight:700;margin-left:auto;text-align:right;font-size:calc(16px*var(--z))}
+.vc .ex{font-family:var(--f-zh);font-size:calc(20px*var(--z));line-height:2}
+.vc .q3{display:flex;gap:8px;align-items:center;border-top:1px dashed var(--line);padding-top:6px}
+.vc .qb{flex:none;background:var(--red);color:#fff;font-weight:800;border-radius:6px;padding:0 7px;font-family:var(--f-zh);font-size:15px}
+.vc.star{border-color:var(--yolk);box-shadow:inset 4px 0 0 var(--yolk)}
+
+/* MC */
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:2px solid var(--line);background:var(--card);border-radius:12px;padding:4px 14px;font-family:var(--f-zh);font-size:calc(22px*var(--z));line-height:1.9;text-align:left}
+.opt b{font-family:var(--f-ui);color:var(--muted);margin-right:6px}
+.opt.ok{border-color:var(--green);background:var(--green-t)}
+.opt.no{border-color:var(--red);background:var(--red-t);text-decoration:line-through}
+.opt.vi-o{font-family:var(--f-ui);font-size:calc(18px*var(--z))}
+.script{font-family:var(--f-zh);font-size:calc(22px*var(--z));line-height:2;background:var(--paper);border-left:5px solid var(--yolk);border-radius:0 10px 10px 0;padding:4px 12px}
+
+/* formula */
+.formula{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.formula>span{font-family:var(--f-zh);font-size:calc(26px*var(--z));font-weight:700;background:var(--yolk-t);border:2px solid var(--yolk);border-radius:12px;padding:2px 14px;line-height:2}
+.note{background:var(--blue-t);border-radius:12px;padding:10px 14px;display:grid;gap:4px;font-size:calc(16px*var(--z))}
+.note b{color:var(--blue)}
+
+/* menu board */
+.board{background:var(--board);color:#F5EBD8;border-radius:16px;padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px;border:6px solid #6B4A2B}
+.board h4{font-family:var(--f-kai);font-size:calc(26px*var(--z));margin:0 0 6px;color:var(--yolk)}
+.board table{width:100%;border-collapse:collapse;font-family:var(--f-zh);font-size:calc(22px*var(--z))}
+.board td{color:#F5EBD8;padding:2px 4px;border-bottom:1px dashed rgba(245,235,216,.25);vertical-align:bottom}
+.board td.p{text-align:right;font-family:var(--f-ui);font-weight:800;color:#fff;white-space:nowrap}
+.board td.x{font-size:.7em;color:#CDBB9A}
+.board .r i{color:#9FD3B4}
+.board .promo{grid-column:1/-1;border-top:2px solid rgba(245,235,216,.3);padding-top:10px;font-size:calc(20px*var(--z));display:flex;flex-wrap:wrap;gap:10px 24px;font-family:var(--f-zh)}
+.board .promo>span{background:var(--red);color:#fff;border-radius:8px;padding:0 10px}
+
+/* dialogue */
+.dlgbox{background:var(--paper);border:2px solid var(--line);border-left:6px solid var(--red);border-radius:14px;padding:10px 20px;font-family:var(--f-zh);font-size:calc(23px*var(--z));line-height:2.1}
+.dlgbox p{margin:0}
+.dlgbox p b{font-family:var(--f-kai);margin-right:4px}
+.dlgbox p.a b{color:var(--red)} .dlgbox p.b b{color:var(--blue)}
+.dlgbox.covered p{filter:blur(9px);user-select:none}
+#dlg-audio{height:44px;max-width:100%}
+.bank{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;border:2px dashed var(--red);border-radius:14px;padding:10px 14px;font-family:var(--f-zh);font-size:calc(24px*var(--z));font-weight:700;line-height:2}
+.bank>span{background:var(--red-t);border-radius:10px;padding:0 12px}
+.thgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr));gap:12px}
+.th{border:1.5px solid var(--line);border-left:5px solid var(--blue);border-radius:12px;padding:12px 14px;display:grid;gap:6px;min-width:0}
+.th .n2{flex:none;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800;display:grid;place-items:center;font-size:14px}
+.th .tf{font-family:var(--f-zh);font-weight:700;color:var(--blue);font-size:calc(22px*var(--z));line-height:2}
+.th .tv{font-weight:700;font-size:calc(16px*var(--z))}
+.th .te{font-family:var(--f-zh);font-size:calc(21px*var(--z));line-height:2}
+.th .tw{font-size:calc(15px*var(--z));background:var(--red-t);color:var(--red);border-radius:8px;padding:6px 10px}
+.dlg{display:grid;gap:8px}
+.ln{display:grid;grid-template-columns:72px 1fr auto;gap:10px;align-items:center;padding:6px 10px;border-radius:12px}
+.ln.a{background:var(--yolk-t)} .ln.b{background:var(--blue-t)}
+.ln .who{font-family:var(--f-kai);font-weight:700;font-size:calc(20px*var(--z))}
+.ln .t{font-family:var(--f-zh);font-size:calc(23px*var(--z));line-height:2}
+.ln.now{outline:3px solid var(--red)}
+.covered .ln .t{filter:blur(9px);user-select:none}
+
+/* reading */
+.passage{font-family:var(--f-zh);font-size:calc(26px*var(--z));line-height:2.3;text-align:justify}
+.frame{display:grid;gap:8px}
+.frame .f{display:grid;grid-template-columns:160px 1fr;gap:10px;align-items:center;border-bottom:1px dashed var(--line);padding:6px 0}
+.frame .f b{color:var(--red);font-size:15px}
+@media (max-width:640px){.frame .f{grid-template-columns:1fr}.it{grid-template-columns:36px 1fr}.it .act{grid-column:2}.ln{grid-template-columns:1fr auto}.ln .who{grid-column:1/-1}}
+
+/* popovers */
+.pop{position:fixed;z-index:50;right:max(16px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 64px);width:min(360px,calc(100vw - 32px));background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:16px;display:grid;gap:10px;box-shadow:0 14px 40px rgba(42,30,20,.25)}
+.pop h3{display:flex;align-items:center;font-size:18px}
+.pop h3 button{margin-left:auto;border:0;background:none;font-size:22px}
+.pick{font-size:96px;font-weight:900;text-align:center;color:var(--red);line-height:1;font-variant-numeric:tabular-nums}
+.clock{font-size:72px;font-weight:900;text-align:center;line-height:1;font-variant-numeric:tabular-nums}
+.clock.low{color:var(--red)}
+.pop input{font:inherit;border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;width:90px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head><body>
+
+<header class="top">
+  <div class="in">
+    <div class="sign">複習<small>Bài ôn tập Buổi 1–3 · viết vào vở · 2 tiết</small></div>
+    <div class="tools">
+      <button class="tool" id="t-py" aria-pressed="true">拼音</button>
+      <button class="tool" id="t-vi" aria-pressed="true">Nghĩa</button>
+      <button class="tool" id="t-sm" aria-label="Chữ nhỏ hơn">A−</button>
+      <button class="tool" id="t-lg" aria-label="Chữ lớn hơn">A＋</button>
+      <button class="tool" id="t-pick">Gọi số</button>
+      <button class="tool" id="t-clock">⏱ <span id="mini">--:--</span></button>
+    </div>
+  </div>
+  <nav class="chips" id="chips" aria-label="Mục lục"></nav>
+</header>
+
+<div class="wrap">
+  <nav class="rail" id="rail" aria-label="Mục lục"></nav>
+  <main id="main"></main>
+</div>
+
+<div class="pop" id="p-pick" hidden>
+  <h3>Gọi số <button data-x aria-label="Đóng">×</button></h3>
+  <div class="row"><label for="pmax">Sĩ số</label><input id="pmax" type="number" min="2" max="60" value="30"><button class="btn" id="preset">Làm lại</button></div>
+  <div class="pick" id="pnum">—</div>
+  <button class="btn p" id="pgo">Gọi số (không trùng)</button>
+  <div class="how" id="pleft"></div>
+</div>
+<div class="pop" id="p-clock" hidden>
+  <h3>Đồng hồ <button data-x aria-label="Đóng">×</button></h3>
+  <div class="clock" id="clock">0:00</div>
+  <div class="row" id="presets"></div>
+  <div class="row"><button class="btn p" id="cgo">Bắt đầu</button><button class="btn" id="cpause">Dừng</button></div>
+</div>
+
+<script>
+const DATA={"P1_PY": ["母語", "擔心", "方向", "行李", "新鮮"], "P1_ZH": [["hàixiū", "害羞"], ["tíngchēchǎng", "停車場"], ["yǎnjìng", "眼鏡"], ["dǎzhé", "打折"], ["chūshēng", "出生"]], "P2": [["我＿＿沒坐過高鐵，下次放假想去試試看。", "從來"], ["晚上一個人走路回宿舍，我有一點＿＿。", "害怕"], ["你不用換車，可以＿＿搭捷運到夜市。", "直接"], ["我到月台的時候，捷運＿＿來了，我很快就上車了。", "剛好"], ["＿＿蛋餅，我還常常吃蘿蔔糕。", "除了"], ["騎機車的時候，＿＿不要太快。", "速度"], ["老闆，對不起，我沒有＿＿，可以給你五百塊嗎？", "零錢"], ["天氣變冷了，出門要記得穿＿＿。", "外套"], ["從學校走到捷運站，＿＿要十分鐘吧。", "大概"], ["這家店的＿＿上有越南文，我們越南學生點餐很方便。", "菜單"]], "P2_BANK": ["年紀", "害怕", "從來", "剛好", "直接", "除了", "速度", "零錢", "菜單", "特別", "外套", "大概"], "P3": [["過 ／ 臭豆腐 ／ 我 ／ 吃 ／ 沒 ／ 從來", "我從來沒吃過臭豆腐。"], ["了 ／ 我 ／ 臺灣 ／ 三個月 ／ 來", "我來臺灣三個月了。"], ["學校 ／ 很近 ／ 離 ／ 宿舍", "宿舍離學校很近。"], ["夜市 ／ 從 ／ 搭捷運 ／ 到 ／ 學校 ／ 二十分鐘 ／ 要", "從學校到夜市搭捷運要二十分鐘。"], ["往 ／ 從 ／ 二號出口 ／ 走 ／ 出去 ／ 右，", "從二號出口出去，往右走。"], ["一樣新 ／ 都是 ／ 我的手錶 ／ 跟 ／ 你的 ／ 上個月買的，", "我的手錶跟你的一樣新，都是上個月買的。"], ["把 ／ 請你 ／ 門口 ／ 搬到 ／ 椅子 ／ 去", "請你把椅子搬到門口去。"], ["越來越 ／ 了 ／ 中文 ／ 你的 ／ 好", "你的中文越來越好了。"]], "P4": [["有的同學喜歡吃蛋餅，有的同學＿＿＿＿＿＿。", "Ví dụ: 有的同學喜歡吃飯糰。"], ["我學中文學了＿＿＿＿了。", "Ví dụ: 我學中文學了一年了。"], ["我覺得高雄的夏天＿＿＿＿熱。（一點也不／不太／有一點／很／非常）", "Ví dụ: 我覺得高雄的夏天非常熱。"], ["要是明天下雨，我就＿＿＿＿＿＿。", "Ví dụ: 要是明天下雨，我就搭公車上學。"], ["因為＿＿＿＿＿＿，所以我今天沒吃早餐。", "Ví dụ: 因為我起床起得太晚，所以我今天沒吃早餐。"], ["這家店的豆漿又＿＿又＿＿。", "Ví dụ: 這家店的豆漿又便宜又新鮮。"], ["老師在教室裡，對門外的學生說：「請進＿！」", "來"], ["我去過＿＿＿＿，可是還沒去過＿＿＿＿。", "Ví dụ: 我去過旗津，可是還沒去過臺北。"]], "P5": [["跟…一樣(Adj)，都是…", "這兩家店的飯糰一樣便宜，都是三十五塊。"], ["因為…所以…", "因為下雨了，所以我搭公車上學。"], ["要是…就…", "要是捷運站太遠，我就騎腳踏車去。"], ["從A到B…要…", "從宿舍到學校走路要十分鐘。"], ["V過", "我在臺灣坐過船。"], ["A離B…", "我家離市區很遠。"]], "P6_ANS": ["已經", "從來", "從", "往", "有的", "先", "然後", "所以"], "P6_BANK": ["已經", "從來", "從", "往", "有的", "先", "然後", "所以", "離", "因為"], "P6_TEXT": "上個星期六，我和室友去高雄的夜市玩。我們（1）在臺灣住了三個月，可是（2）沒去過這個夜市。（3）宿舍到夜市，搭捷運要二十分鐘。我們從二號出口出去，（4）左走五分鐘就到了。夜市裡人很多，（5）人在排隊買雞排，有的人在吃臭豆腐。我（6）吃了一個蛋餅，（7）喝了一杯奶茶。因為東西又便宜又好吃，（8）我們決定下個星期再來！", "P7": [["小明是高中生，帶了學生證，星期三去，要多少錢？", ["二百塊", "三百塊", "三百五十塊", "四百塊"], 1], ["爸爸、媽媽和八歲的妹妹星期二去，一共多少錢？", ["八百塊", "九百塊", "一千塊", "一千二百塊"], 2], ["一個學生星期六去，帶了學生證，要多少錢？", ["三百塊", "三百五十塊", "四百塊", "四百五十塊"], 1], ["奶奶七十歲，弟弟五歲，星期一一起去，一共多少錢？", ["二百塊", "二百五十塊", "四百塊", "六百塊"], 0], ["十二個大人星期四一起去，一共多少錢？", ["四千塊", "四千三百二十塊", "四千八百塊", "五千四百塊"], 1]], "P7_NOTE": ["星期六、星期日：每張票多五十塊（免費的不用加）", "十個人以上一起買：每張票打九折"], "P7_TABLE": [["全票", "400"], ["學生票（要帶學生證）", "300"], ["兒童票（6～12歲）", "200"], ["65歲以上", "200"], ["6歲以下", "免費"]], "P8_FRAME": [["① Em đến Đài Loan bao lâu", "我來臺灣＿＿＿＿了。"], ["② Ở đâu, cách trường xa không", "我住在＿＿＿＿，＿＿離學校＿＿＿＿。"], ["③ Đi học thế nào", "從＿＿到學校，我每天＿＿＿＿，要＿＿分鐘。"], ["④ Đã làm gì, thích ăn gì", "在臺灣，我＿＿過＿＿＿＿。我最喜歡吃＿＿＿＿，因為又＿＿又＿＿。"], ["⑤ So sánh, kết luận", "臺灣跟越南不一樣，＿＿＿＿。要是＿＿＿＿，我就＿＿＿＿。"]], "THEORY": [["V過", "Đã từng làm (kinh nghiệm)", ["我去過臺北。", "我從來沒吃過臭豆腐。"], "Phủ định dùng 沒V過, không dùng 不V過. Hỏi: 你V過…嗎？"], ["V＋thời gian＋了", "Làm việc gì được bao lâu rồi (vẫn đang tiếp tục)", ["我來臺灣三個月了。", "我學中文學了一年了。"], "Có tân ngữ thì lặp động từ: 學中文學了…, hoặc 學了一年的中文."], ["有的…，有的…", "Có người / có cái thì…, có người / có cái thì…", ["有的同學喜歡吃蛋餅，有的同學喜歡吃飯糰。"], "Dùng khi chia một nhóm thành vài phần."], ["一點也不 · 不太 · 有一點 · 很 · 非常 ＋ Adj", "Mức độ từ thấp đến cao", ["我一點也不累。", "高雄的夏天非常熱。"], "有一點＋Adj thường mang ý không thích: 有一點貴, 有一點累."], ["從A到B ＋ 怎麼去／要多久", "Từ A đến B đi bằng gì / mất bao lâu", ["從宿舍到學校，騎腳踏車要十分鐘。"], "Thứ tự: từ đâu → đến đâu → đi bằng gì → bao lâu. Không nói 我去學校從宿舍."], ["A離B ＋ 很遠／很近", "A cách B xa / gần", ["我家離捷運站很近，走路只要五分鐘。"], "Không nói A從B很遠."], ["從…往…走／轉 · 先…然後…接著…最後…", "Chỉ đường nhiều bước", ["從二號出口出去，先往前走，接著往右轉。"], "往 ＋ hướng ＋ động từ: 往左走, 往右轉."], ["V＋進／出／上／下／回／過＋來／去", "Bổ ngữ xu hướng", ["老師在教室裡說：「請進來！」", "你可以把書拿回去。"], "來: về phía người nói. 去: rời xa người nói."], ["把＋đồ vật＋V到＋nơi（＋來／去）", "Chuyển đồ vật đến một nơi", ["請你把椅子搬到門口去。"], "Sau 把 là đồ vật cụ thể, động từ phải có phần đi kèm (到…, 來/去)."], ["要是…，(S)就…", "Nếu… thì…", ["要是明天下雨，我就搭公車上學。"], "就 đứng sau chủ ngữ của vế sau: 我就…, không nói 就我…"], ["越來越＋Adj＋了", "Ngày càng…", ["你的中文越來越好了。"], "Không thêm 很: không nói 越來越很好."], ["A跟B一樣(Adj)，都是…", "A và B giống nhau, đều là…", ["這兩家店的蛋餅一樣便宜，都是三十五塊。"], "一樣 đứng sau 跟B, trước tính từ. Phủ định: A跟B不一樣."], ["因為…，所以…", "Vì… nên…", ["因為我沒帶零錢，所以只好給老闆一百塊。"], "Nguyên nhân trước, kết quả sau. Không nói 所以…，因為…"], ["又…又…", "Vừa… vừa…", ["這家店的豆漿又便宜又新鮮。"], "Hai tính từ cùng chiều (cùng tốt hoặc cùng xấu)."]]};
+const RUBY={"往 ／ 從 ／ 二號出口 ／ 走 ／ 出去 ／ 右，": [["往", "wǎng"], [" ", null], ["／", null], [" ", null], ["從", "cóng"], [" ", null], ["／", null], [" ", null], ["二", "èr"], ["號", "hào"], ["出", "chū"], ["口", "kǒu"], [" ", null], ["／", null], [" ", null], ["走", "zǒu"], [" ", null], ["／", null], [" ", null], ["出", "chū"], ["去", "qù"], [" ", null], ["／", null], [" ", null], ["右", "yòu"], ["，", null]], "Ví dụ: 這家店的豆漿又便宜又新鮮。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["這", "zhè"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["豆", "dòu"], ["漿", "jiāng"], ["又", "yòu"], ["便", "pián"], ["宜", "yí"], ["又", "yòu"], ["新", "xīn"], ["鮮", "xiān"], ["。", null]], "三百五十塊": [["三", "sān"], ["百", "bǎi"], ["五", "wǔ"], ["十", "shí"], ["塊", "kuài"]], "我學中文學了＿＿＿＿了。": [["我", "wǒ"], ["學", "xué"], ["中", "zhōng"], ["文", "wén"], ["學", "xué"], ["了", "le"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["了", "le"], ["。", null]], "打折": [["打", "dǎ"], ["折", "zhé"]], "一點也不": [["一", "yì"], ["點", "diǎn"], ["也", "yě"], ["不", "bù"]], "年紀": [["年", "nián"], ["紀", "jì"]], "Ví dụ: 因為我起床起得太晚，所以我今天沒吃早餐。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["因", "yīn"], ["為", "wèi"], ["我", "wǒ"], ["起", "qǐ"], ["床", "chuáng"], ["起", "qǐ"], ["得", "de"], ["太", "tài"], ["晚", "wǎn"], ["，", null], ["所", "suǒ"], ["以", "yǐ"], ["我", "wǒ"], ["今", "jīn"], ["天", "tiān"], ["沒", "méi"], ["吃", "chī"], ["早", "zǎo"], ["餐", "cān"], ["。", null]], "星期六、星期日：每張票多五十塊（免費的不用加）": [["星", "xīng"], ["期", "qí"], ["六", "liù"], ["、", null], ["星", "xīng"], ["期", "qí"], ["日", "rì"], ["：", null], ["每", "měi"], ["張", "zhāng"], ["票", "piào"], ["多", "duō"], ["五", "wǔ"], ["十", "shí"], ["塊", "kuài"], ["（", null], ["免", "miǎn"], ["費", "fèi"], ["的", "de"], ["不", "bú"], ["用", "yòng"], ["加", "jiā"], ["）", null]], "在臺灣，我＿＿過＿＿＿＿。我最喜歡吃＿＿＿＿，因為又＿＿又＿＿。": [["在", "zài"], ["臺", "tái"], ["灣", "wān"], ["，", null], ["我", "wǒ"], ["＿", null], ["＿", null], ["過", "guo"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null], ["我", "wǒ"], ["最", "zuì"], ["喜", "xǐ"], ["歡", "huān"], ["吃", "chī"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["因", "yīn"], ["為", "wèi"], ["又", "yòu"], ["＿", null], ["＿", null], ["又", "yòu"], ["＿", null], ["＿", null], ["。", null]], "＿＿蛋餅，我還常常吃蘿蔔糕。": [["＿", null], ["＿", null], ["蛋", "dàn"], ["餅", "bǐng"], ["，", null], ["我", "wǒ"], ["還", "hái"], ["常", "cháng"], ["常", "cháng"], ["吃", "chī"], ["蘿", "luó"], ["蔔", "bo"], ["糕", "gāo"], ["。", null]], "出生": [["出", "chū"], ["生", "shēng"]], "Ví dụ: 我去過旗津，可是還沒去過臺北。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["我", "wǒ"], ["去", "qù"], ["過", "guo"], ["旗", "qí"], ["津", "jīn"], ["，", null], ["可", "kě"], ["是", "shì"], ["還", "hái"], ["沒", "méi"], ["去", "qù"], ["過", "guo"], ["臺", "tái"], ["北", "běi"], ["。", null]], "價錢": [["價", "jià"], ["錢", "qián"]], "夜市 ／ 從 ／ 搭捷運 ／ 到 ／ 學校 ／ 二十分鐘 ／ 要": [["夜", "yè"], ["市", "shì"], [" ", null], ["／", null], [" ", null], ["從", "cóng"], [" ", null], ["／", null], [" ", null], ["搭", "dā"], ["捷", "jié"], ["運", "yùn"], [" ", null], ["／", null], [" ", null], ["到", "dào"], [" ", null], ["／", null], [" ", null], ["學", "xué"], ["校", "xiào"], [" ", null], ["／", null], [" ", null], ["二", "èr"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], [" ", null], ["／", null], [" ", null], ["要", "yào"]], "從二號出口出去，往右走。": [["從", "cóng"], ["二", "èr"], ["號", "hào"], ["出", "chū"], ["口", "kǒu"], ["出", "chū"], ["去", "qù"], ["，", null], ["往", "wǎng"], ["右", "yòu"], ["走", "zǒu"], ["。", null]], "離": [["離", "lí"]], "害羞": [["害", "hài"], ["羞", "xiū"]], "大概": [["大", "dà"], ["概", "gài"]], "外套": [["外", "wài"], ["套", "tào"]], "除了": [["除", "chú"], ["了", "le"]], "我家離市區很遠。": [["我", "wǒ"], ["家", "jiā"], ["離", "lí"], ["市", "shì"], ["區", "qū"], ["很", "hěn"], ["遠", "yuǎn"], ["。", null]], "擔心": [["擔", "dān"], ["心", "xīn"]], "我覺得高雄的夏天＿＿＿＿熱。（一點也不／不太／有一點／很／非常）": [["我", "wǒ"], ["覺", "jué"], ["得", "de"], ["高", "gāo"], ["雄", "xióng"], ["的", "de"], ["夏", "xià"], ["天", "tiān"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["熱", "rè"], ["。", null], ["（", null], ["一", "yì"], ["點", "diǎn"], ["也", "yě"], ["不", "bù"], ["／", null], ["不", "bú"], ["太", "tài"], ["／", null], ["有", "yǒu"], ["一", "yì"], ["點", "diǎn"], ["／", null], ["很", "hěn"], ["／", null], ["非", "fēi"], ["常", "cháng"], ["）", null]], "害怕": [["害", "hài"], ["怕", "pà"]], "八百塊": [["八", "bā"], ["百", "bǎi"], ["塊", "kuài"]], "新鮮": [["新", "xīn"], ["鮮", "xiān"]], "剛好": [["剛", "gāng"], ["好", "hǎo"]], "從學校到夜市搭捷運要二十分鐘。": [["從", "cóng"], ["學", "xué"], ["校", "xiào"], ["到", "dào"], ["夜", "yè"], ["市", "shì"], ["搭", "dā"], ["捷", "jié"], ["運", "yùn"], ["要", "yào"], ["二", "èr"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], ["。", null]], "了 ／ 我 ／ 臺灣 ／ 三個月 ／ 來": [["了", "le"], [" ", null], ["／", null], [" ", null], ["我", "wǒ"], [" ", null], ["／", null], [" ", null], ["臺", "tái"], ["灣", "wān"], [" ", null], ["／", null], [" ", null], ["三", "sān"], ["個", "ge"], ["月", "yuè"], [" ", null], ["／", null], [" ", null], ["來", "lái"]], "越來越 ／ 了 ／ 中文 ／ 你的 ／ 好": [["越", "yuè"], ["來", "lái"], ["越", "yuè"], [" ", null], ["／", null], [" ", null], ["了", "le"], [" ", null], ["／", null], [" ", null], ["中", "zhōng"], ["文", "wén"], [" ", null], ["／", null], [" ", null], ["你", "nǐ"], ["的", "de"], [" ", null], ["／", null], [" ", null], ["好", "hǎo"]], "我從來沒吃過臭豆腐。": [["我", "wǒ"], ["從", "cóng"], ["來", "lái"], ["沒", "méi"], ["吃", "chī"], ["過", "guo"], ["臭", "chòu"], ["豆", "dòu"], ["腐", "fǔ"], ["。", null]], "從＿＿到學校，我每天＿＿＿＿，要＿＿分鐘。": [["從", "cóng"], ["＿", null], ["＿", null], ["到", "dào"], ["學", "xué"], ["校", "xiào"], ["，", null], ["我", "wǒ"], ["每", "měi"], ["天", "tiān"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["要", "yào"], ["＿", null], ["＿", null], ["分", "fēn"], ["鐘", "zhōng"], ["。", null]], "奶奶七十歲，弟弟五歲，星期一一起去，一共多少錢？": [["奶", "nǎi"], ["奶", "nai"], ["七", "qī"], ["十", "shí"], ["歲", "suì"], ["，", null], ["弟", "dì"], ["弟", "di"], ["五", "wǔ"], ["歲", "suì"], ["，", null], ["星", "xīng"], ["期", "qí"], ["一", "yī"], ["一", "yì"], ["起", "qǐ"], ["去", "qù"], ["，", null], ["一", "yí"], ["共", "gòng"], ["多", "duō"], ["少", "shǎo"], ["錢", "qián"], ["？", null]], "四千塊": [["四", "sì"], ["千", "qiān"], ["塊", "kuài"]], "一千二百塊": [["一", "yì"], ["千", "qiān"], ["二", "èr"], ["百", "bǎi"], ["塊", "kuài"]], "這家店的＿＿上有越南文，我們越南學生點餐很方便。": [["這", "zhè"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["＿", null], ["＿", null], ["上", "shàng"], ["有", "yǒu"], ["越", "yuè"], ["南", "nán"], ["文", "wén"], ["，", null], ["我", "wǒ"], ["們", "men"], ["越", "yuè"], ["南", "nán"], ["學", "xué"], ["生", "shēng"], ["點", "diǎn"], ["餐", "cān"], ["很", "hěn"], ["方", "fāng"], ["便", "biàn"], ["。", null]], "臺灣跟越南": [["臺", "tái"], ["灣", "wān"], ["跟", "gēn"], ["越", "yuè"], ["南", "nán"]], "要是明天下雨，我就＿＿＿＿＿＿。": [["要", "yào"], ["是", "shì"], ["明", "míng"], ["天", "tiān"], ["下", "xià"], ["雨", "yǔ"], ["，", null], ["我", "wǒ"], ["就", "jiù"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null]], "從": [["從", "cóng"]], "四百塊": [["四", "sì"], ["百", "bǎi"], ["塊", "kuài"]], "二百塊": [["二", "èr"], ["百", "bǎi"], ["塊", "kuài"]], "因為下雨了，所以我搭公車上學。": [["因", "yīn"], ["為", "wèi"], ["下", "xià"], ["雨", "yǔ"], ["了", "le"], ["，", null], ["所", "suǒ"], ["以", "yǐ"], ["我", "wǒ"], ["搭", "dā"], ["公", "gōng"], ["車", "chē"], ["上", "shàng"], ["學", "xué"], ["。", null]], "眼鏡": [["眼", "yǎn"], ["鏡", "jìng"]], "我的手錶跟你的一樣新，都是上個月買的。": [["我", "wǒ"], ["的", "de"], ["手", "shǒu"], ["錶", "biǎo"], ["跟", "gēn"], ["你", "nǐ"], ["的", "de"], ["一", "yí"], ["樣", "yàng"], ["新", "xīn"], ["，", null], ["都", "dōu"], ["是", "shì"], ["上", "shàng"], ["個", "ge"], ["月", "yuè"], ["買", "mǎi"], ["的", "de"], ["。", null]], "天氣變冷了，出門要記得穿＿＿。": [["天", "tiān"], ["氣", "qì"], ["變", "biàn"], ["冷", "lěng"], ["了", "le"], ["，", null], ["出", "chū"], ["門", "mén"], ["要", "yào"], ["記", "jì"], ["得", "de"], ["穿", "chuān"], ["＿", null], ["＿", null], ["。", null]], "門票": [["門", "mén"], ["票", "piào"]], "老師在教室裡，對門外的學生說：「請進＿！」": [["老", "lǎo"], ["師", "shī"], ["在", "zài"], ["教", "jiào"], ["室", "shì"], ["裡", "lǐ"], ["，", null], ["對", "duì"], ["門", "mén"], ["外", "wài"], ["的", "de"], ["學", "xué"], ["生", "shēng"], ["說", "shuō"], ["：", null], ["「", null], ["請", "qǐng"], ["進", "jìn"], ["＿", null], ["！", null], ["」", null]], "來": [["來", "lái"]], "從來": [["從", "cóng"], ["來", "lái"]], "V過": [["V", null], ["過", "guò"]], "65歲以上": [["6", null], ["5", null], ["歲", "suì"], ["以", "yǐ"], ["上", "shàng"]], "免費": [["免", "miǎn"], ["費", "fèi"]], "十個人以上一起買：每張票打九折": [["十", "shí"], ["個", "ge"], ["人", "rén"], ["以", "yǐ"], ["上", "shàng"], ["一", "yì"], ["起", "qǐ"], ["買", "mǎi"], ["：", null], ["每", "měi"], ["張", "zhāng"], ["票", "piào"], ["打", "dǎ"], ["九", "jiǔ"], ["折", "zhé"]], "因為＿＿＿＿＿＿，所以我今天沒吃早餐。": [["因", "yīn"], ["為", "wèi"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["所", "suǒ"], ["以", "yǐ"], ["我", "wǒ"], ["今", "jīn"], ["天", "tiān"], ["沒", "méi"], ["吃", "chī"], ["早", "zǎo"], ["餐", "cān"], ["。", null]], "6歲以下": [["6", null], ["歲", "suì"], ["以", "yǐ"], ["下", "xià"]], "從學校走到捷運站，＿＿要十分鐘吧。": [["從", "cóng"], ["學", "xué"], ["校", "xiào"], ["走", "zǒu"], ["到", "dào"], ["捷", "jié"], ["運", "yùn"], ["站", "zhàn"], ["，", null], ["＿", null], ["＿", null], ["要", "yào"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], ["吧", "ba"], ["。", null]], "十二個大人星期四一起去，一共多少錢？": [["十", "shí"], ["二", "èr"], ["個", "ge"], ["大", "dà"], ["人", "rén"], ["星", "xīng"], ["期", "qí"], ["四", "sì"], ["一", "yì"], ["起", "qǐ"], ["去", "qù"], ["，", null], ["一", "yí"], ["共", "gòng"], ["多", "duō"], ["少", "shǎo"], ["錢", "qián"], ["？", null]], "A離B…": [["A", null], ["離", "lí"], ["B", null], ["…", null]], "因為…所以…": [["因", "yīn"], ["為", "wèi"], ["…", null], ["所", "suǒ"], ["以", "yǐ"], ["…", null]], "晚上一個人走路回宿舍，我有一點＿＿。": [["晚", "wǎn"], ["上", "shàng"], ["一", "yí"], ["個", "ge"], ["人", "rén"], ["走", "zǒu"], ["路", "lù"], ["回", "huí"], ["宿", "sù"], ["舍", "shè"], ["，", null], ["我", "wǒ"], ["有", "yǒu"], ["一", "yì"], ["點", "diǎn"], ["＿", null], ["＿", null], ["。", null]], "往": [["往", "wǎng"]], "直接": [["直", "zhí"], ["接", "jiē"]], "速度": [["速", "sù"], ["度", "dù"]], "非常": [["非", "fēi"], ["常", "cháng"]], "要是…就…": [["要", "yào"], ["是", "shì"], ["…", null], ["就", "jiù"], ["…", null]], "我來臺灣＿＿＿＿了。": [["我", "wǒ"], ["來", "lái"], ["臺", "tái"], ["灣", "wān"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["了", "le"], ["。", null]], "一千塊": [["一", "yì"], ["千", "qiān"], ["塊", "kuài"]], "已經": [["已", "yǐ"], ["經", "jīng"]], "很": [["很", "hěn"]], "過 ／ 臭豆腐 ／ 我 ／ 吃 ／ 沒 ／ 從來": [["過", "guo"], [" ", null], ["／", null], [" ", null], ["臭", "chòu"], ["豆", "dòu"], ["腐", "fǔ"], [" ", null], ["／", null], [" ", null], ["我", "wǒ"], [" ", null], ["／", null], [" ", null], ["吃", "chī"], [" ", null], ["／", null], [" ", null], ["沒", "méi"], [" ", null], ["／", null], [" ", null], ["從", "cóng"], ["來", "lái"]], "四千三百二十塊": [["四", "sì"], ["千", "qiān"], ["三", "sān"], ["百", "bǎi"], ["二", "èr"], ["十", "shí"], ["塊", "kuài"]], "老闆，對不起，我沒有＿＿，可以給你五百塊嗎？": [["老", "lǎo"], ["闆", "bǎn"], ["，", null], ["對", "duì"], ["不", "bù"], ["起", "qǐ"], ["，", null], ["我", "wǒ"], ["沒", "méi"], ["有", "yǒu"], ["＿", null], ["＿", null], ["，", null], ["可", "kě"], ["以", "yǐ"], ["給", "gěi"], ["你", "nǐ"], ["五", "wǔ"], ["百", "bǎi"], ["塊", "kuài"], ["嗎", "ma"], ["？", null]], "有的同學喜歡吃蛋餅，有的同學＿＿＿＿＿＿。": [["有", "yǒu"], ["的", "de"], ["同", "tóng"], ["學", "xué"], ["喜", "xǐ"], ["歡", "huān"], ["吃", "chī"], ["蛋", "dàn"], ["餅", "bǐng"], ["，", null], ["有", "yǒu"], ["的", "de"], ["同", "tóng"], ["學", "xué"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null]], "六百塊": [["六", "liù"], ["百", "bǎi"], ["塊", "kuài"]], "我到月台的時候，捷運＿＿來了，我很快就上車了。": [["我", "wǒ"], ["到", "dào"], ["月", "yuè"], ["台", "tái"], ["的", "de"], ["時", "shí"], ["候", "hou"], ["，", null], ["捷", "jié"], ["運", "yùn"], ["＿", null], ["＿", null], ["來", "lái"], ["了", "le"], ["，", null], ["我", "wǒ"], ["很", "hěn"], ["快", "kuài"], ["就", "jiù"], ["上", "shàng"], ["車", "chē"], ["了", "le"], ["。", null]], "要是捷運站太遠，我就騎腳踏車去。": [["要", "yào"], ["是", "shì"], ["捷", "jié"], ["運", "yùn"], ["站", "zhàn"], ["太", "tài"], ["遠", "yuǎn"], ["，", null], ["我", "wǒ"], ["就", "jiù"], ["騎", "qí"], ["腳", "jiǎo"], ["踏", "tà"], ["車", "chē"], ["去", "qù"], ["。", null]], "零錢": [["零", "líng"], ["錢", "qián"]], "五千四百塊": [["五", "wǔ"], ["千", "qiān"], ["四", "sì"], ["百", "bǎi"], ["塊", "kuài"]], "方向": [["方", "fāng"], ["向", "xiàng"]], "因為": [["因", "yīn"], ["為", "wèi"]], "我在臺灣的生活": [["我", "wǒ"], ["在", "zài"], ["臺", "tái"], ["灣", "wān"], ["的", "de"], ["生", "shēng"], ["活", "huó"]], "小明是高中生，帶了學生證，星期三去，要多少錢？": [["小", "xiǎo"], ["明", "míng"], ["是", "shì"], ["高", "gāo"], ["中", "zhōng"], ["生", "shēng"], ["，", null], ["帶", "dài"], ["了", "le"], ["學", "xué"], ["生", "shēng"], ["證", "zhèng"], ["，", null], ["星", "xīng"], ["期", "qí"], ["三", "sān"], ["去", "qù"], ["，", null], ["要", "yào"], ["多", "duō"], ["少", "shǎo"], ["錢", "qián"], ["？", null]], "Ví dụ: 要是明天下雨，我就搭公車上學。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["要", "yào"], ["是", "shì"], ["明", "míng"], ["天", "tiān"], ["下", "xià"], ["雨", "yǔ"], ["，", null], ["我", "wǒ"], ["就", "jiù"], ["搭", "dā"], ["公", "gōng"], ["車", "chē"], ["上", "shàng"], ["學", "xué"], ["。", null]], "我來臺灣三個月了。": [["我", "wǒ"], ["來", "lái"], ["臺", "tái"], ["灣", "wān"], ["三", "sān"], ["個", "ge"], ["月", "yuè"], ["了", "le"], ["。", null]], "高雄遊樂園": [["高", "gāo"], ["雄", "xióng"], ["遊", "yóu"], ["樂", "lè"], ["園", "yuán"]], "騎機車的時候，＿＿不要太快。": [["騎", "qí"], ["機", "jī"], ["車", "chē"], ["的", "de"], ["時", "shí"], ["候", "hou"], ["，", null], ["＿", null], ["＿", null], ["不", "bú"], ["要", "yào"], ["太", "tài"], ["快", "kuài"], ["。", null]], "一個學生星期六去，帶了學生證，要多少錢？": [["一", "yí"], ["個", "ge"], ["學", "xué"], ["生", "shēng"], ["星", "xīng"], ["期", "qí"], ["六", "liù"], ["去", "qù"], ["，", null], ["帶", "dài"], ["了", "le"], ["學", "xué"], ["生", "shēng"], ["證", "zhèng"], ["，", null], ["要", "yào"], ["多", "duō"], ["少", "shǎo"], ["錢", "qián"], ["？", null]], "臺灣跟越南不一樣，＿＿＿＿。要是＿＿＿＿，我就＿＿＿＿。": [["臺", "tái"], ["灣", "wān"], ["跟", "gēn"], ["越", "yuè"], ["南", "nán"], ["不", "bù"], ["一", "yí"], ["樣", "yàng"], ["，", null], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null], ["要", "yào"], ["是", "shì"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["我", "wǒ"], ["就", "jiù"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null]], "上個星期六，我和室友去高雄的夜市玩。我們（1）在臺灣住了三個月，可是（2）沒去過這個夜市。（3）宿舍到夜市，搭捷運要二十分鐘。我們從二號出口出去，（4）左走五分鐘就到了。夜市裡人很多，（5）人在排隊買雞排，有的人在吃臭豆腐。我（6）吃了一個蛋餅，（7）喝了一杯奶茶。因為東西又便宜又好吃，（8）我們決定下個星期再來！": [["上", "shàng"], ["個", "ge"], ["星", "xīng"], ["期", "qí"], ["六", "liù"], ["，", null], ["我", "wǒ"], ["和", "hé"], ["室", "shì"], ["友", "yǒu"], ["去", "qù"], ["高", "gāo"], ["雄", "xióng"], ["的", "de"], ["夜", "yè"], ["市", "shì"], ["玩", "wán"], ["。", null], ["我", "wǒ"], ["們", "men"], ["（", null], ["1", null], ["）", null], ["在", "zài"], ["臺", "tái"], ["灣", "wān"], ["住", "zhù"], ["了", "le"], ["三", "sān"], ["個", "ge"], ["月", "yuè"], ["，", null], ["可", "kě"], ["是", "shì"], ["（", null], ["2", null], ["）", null], ["沒", "méi"], ["去", "qù"], ["過", "guo"], ["這", "zhè"], ["個", "ge"], ["夜", "yè"], ["市", "shì"], ["。", null], ["（", null], ["3", null], ["）", null], ["宿", "sù"], ["舍", "shè"], ["到", "dào"], ["夜", "yè"], ["市", "shì"], ["，", null], ["搭", "dā"], ["捷", "jié"], ["運", "yùn"], ["要", "yào"], ["二", "èr"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], ["。", null], ["我", "wǒ"], ["們", "men"], ["從", "cóng"], ["二", "èr"], ["號", "hào"], ["出", "chū"], ["口", "kǒu"], ["出", "chū"], ["去", "qù"], ["，", null], ["（", null], ["4", null], ["）", null], ["左", "zuǒ"], ["走", "zǒu"], ["五", "wǔ"], ["分", "fēn"], ["鐘", "zhōng"], ["就", "jiù"], ["到", "dào"], ["了", "le"], ["。", null], ["夜", "yè"], ["市", "shì"], ["裡", "lǐ"], ["人", "rén"], ["很", "hěn"], ["多", "duō"], ["，", null], ["（", null], ["5", null], ["）", null], ["人", "rén"], ["在", "zài"], ["排", "pái"], ["隊", "duì"], ["買", "mǎi"], ["雞", "jī"], ["排", "pái"], ["，", null], ["有", "yǒu"], ["的", "de"], ["人", "rén"], ["在", "zài"], ["吃", "chī"], ["臭", "chòu"], ["豆", "dòu"], ["腐", "fǔ"], ["。", null], ["我", "wǒ"], ["（", null], ["6", null], ["）", null], ["吃", "chī"], ["了", "le"], ["一", "yí"], ["個", "ge"], ["蛋", "dàn"], ["餅", "bǐng"], ["，", null], ["（", null], ["7", null], ["）", null], ["喝", "hē"], ["了", "le"], ["一", "yì"], ["杯", "bēi"], ["奶", "nǎi"], ["茶", "chá"], ["。", null], ["因", "yīn"], ["為", "wèi"], ["東", "dōng"], ["西", "xi"], ["又", "yòu"], ["便", "pián"], ["宜", "yí"], ["又", "yòu"], ["好", "hǎo"], ["吃", "chī"], ["，", null], ["（", null], ["8", null], ["）", null], ["我", "wǒ"], ["們", "men"], ["決", "jué"], ["定", "dìng"], ["下", "xià"], ["個", "ge"], ["星", "xīng"], ["期", "qí"], ["再", "zài"], ["來", "lái"], ["！", null]], "所以": [["所", "suǒ"], ["以", "yǐ"]], "Ví dụ: 我學中文學了一年了。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["我", "wǒ"], ["學", "xué"], ["中", "zhōng"], ["文", "wén"], ["學", "xué"], ["了", "le"], ["一", "yì"], ["年", "nián"], ["了", "le"], ["。", null]], "二百五十塊": [["二", "èr"], ["百", "bǎi"], ["五", "wǔ"], ["十", "shí"], ["塊", "kuài"]], "兒童票（6～12歲）": [["兒", "ér"], ["童", "tóng"], ["票", "piào"], ["（", null], ["6", null], ["～", null], ["1", null], ["2", null], ["歲", "suì"], ["）", null]], "一樣新 ／ 都是 ／ 我的手錶 ／ 跟 ／ 你的 ／ 上個月買的，": [["一", "yí"], ["樣", "yàng"], ["新", "xīn"], [" ", null], ["／", null], [" ", null], ["都", "dōu"], ["是", "shì"], [" ", null], ["／", null], [" ", null], ["我", "wǒ"], ["的", "de"], ["手", "shǒu"], ["錶", "biǎo"], [" ", null], ["／", null], [" ", null], ["跟", "gēn"], [" ", null], ["／", null], [" ", null], ["你", "nǐ"], ["的", "de"], [" ", null], ["／", null], [" ", null], ["上", "shàng"], ["個", "ge"], ["月", "yuè"], ["買", "mǎi"], ["的", "de"], ["，", null]], "特別": [["特", "tè"], ["別", "bié"]], "四百五十塊": [["四", "sì"], ["百", "bǎi"], ["五", "wǔ"], ["十", "shí"], ["塊", "kuài"]], "九百塊": [["九", "jiǔ"], ["百", "bǎi"], ["塊", "kuài"]], "有的": [["有", "yǒu"], ["的", "de"]], "請你把椅子搬到門口去。": [["請", "qǐng"], ["你", "nǐ"], ["把", "bǎ"], ["椅", "yǐ"], ["子", "zi"], ["搬", "bān"], ["到", "dào"], ["門", "mén"], ["口", "kǒu"], ["去", "qù"], ["。", null]], "從宿舍到學校走路要十分鐘。": [["從", "cóng"], ["宿", "sù"], ["舍", "shè"], ["到", "dào"], ["學", "xué"], ["校", "xiào"], ["走", "zǒu"], ["路", "lù"], ["要", "yào"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], ["。", null]], "我去過＿＿＿＿，可是還沒去過＿＿＿＿。": [["我", "wǒ"], ["去", "qù"], ["過", "guo"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["可", "kě"], ["是", "shì"], ["還", "hái"], ["沒", "méi"], ["去", "qù"], ["過", "guo"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null]], "行李": [["行", "xíng"], ["李", "lǐ"]], "全票": [["全", "quán"], ["票", "piào"]], "Ví dụ: 有的同學喜歡吃飯糰。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["有", "yǒu"], ["的", "de"], ["同", "tóng"], ["學", "xué"], ["喜", "xǐ"], ["歡", "huān"], ["吃", "chī"], ["飯", "fàn"], ["糰", "tuán"], ["。", null]], "四千八百塊": [["四", "sì"], ["千", "qiān"], ["八", "bā"], ["百", "bǎi"], ["塊", "kuài"]], "你不用換車，可以＿＿搭捷運到夜市。": [["你", "nǐ"], ["不", "bú"], ["用", "yòng"], ["換", "huàn"], ["車", "chē"], ["，", null], ["可", "kě"], ["以", "yǐ"], ["＿", null], ["＿", null], ["搭", "dā"], ["捷", "jié"], ["運", "yùn"], ["到", "dào"], ["夜", "yè"], ["市", "shì"], ["。", null]], "母語": [["母", "mǔ"], ["語", "yǔ"]], "把 ／ 請你 ／ 門口 ／ 搬到 ／ 椅子 ／ 去": [["把", "bǎ"], [" ", null], ["／", null], [" ", null], ["請", "qǐng"], ["你", "nǐ"], [" ", null], ["／", null], [" ", null], ["門", "mén"], ["口", "kǒu"], [" ", null], ["／", null], [" ", null], ["搬", "bān"], ["到", "dào"], [" ", null], ["／", null], [" ", null], ["椅", "yǐ"], ["子", "zi"], [" ", null], ["／", null], [" ", null], ["去", "qù"]], "然後": [["然", "rán"], ["後", "hòu"]], "從A到B…要…": [["從", "cóng"], ["A", null], ["到", "dào"], ["B", null], ["…", null], ["要", "yào"], ["…", null]], "不太": [["不", "bú"], ["太", "tài"]], "學生票（要帶學生證）": [["學", "xué"], ["生", "shēng"], ["票", "piào"], ["（", null], ["要", "yào"], ["帶", "dài"], ["學", "xué"], ["生", "shēng"], ["證", "zhèng"], ["）", null]], "學校 ／ 很近 ／ 離 ／ 宿舍": [["學", "xué"], ["校", "xiào"], [" ", null], ["／", null], [" ", null], ["很", "hěn"], ["近", "jìn"], [" ", null], ["／", null], [" ", null], ["離", "lí"], [" ", null], ["／", null], [" ", null], ["宿", "sù"], ["舍", "shè"]], "跟…一樣(Adj)，都是…": [["跟", "gēn"], ["…", null], ["一", "yí"], ["樣", "yàng"], ["(", null], ["A", null], ["d", null], ["j", null], [")", null], ["，", null], ["都", "dōu"], ["是", "shì"], ["…", null]], "Ví dụ: 我覺得高雄的夏天非常熱。": [["V", null], ["í", null], [" ", null], ["d", null], ["ụ", null], [":", null], [" ", null], ["我", "wǒ"], ["覺", "jué"], ["得", "de"], ["高", "gāo"], ["雄", "xióng"], ["的", "de"], ["夏", "xià"], ["天", "tiān"], ["非", "fēi"], ["常", "cháng"], ["熱", "rè"], ["。", null]], "有一點": [["有", "yǒu"], ["一", "yì"], ["點", "diǎn"]], "菜單": [["菜", "cài"], ["單", "dān"]], "宿舍離學校很近。": [["宿", "sù"], ["舍", "shè"], ["離", "lí"], ["學", "xué"], ["校", "xiào"], ["很", "hěn"], ["近", "jìn"], ["。", null]], "這家店的豆漿又＿＿又＿＿。": [["這", "zhè"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["豆", "dòu"], ["漿", "jiāng"], ["又", "yòu"], ["＿", null], ["＿", null], ["又", "yòu"], ["＿", null], ["＿", null], ["。", null]], "先": [["先", "xiān"]], "我住在＿＿＿＿，＿＿離學校＿＿＿＿。": [["我", "wǒ"], ["住", "zhù"], ["在", "zài"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["，", null], ["＿", null], ["＿", null], ["離", "lí"], ["學", "xué"], ["校", "xiào"], ["＿", null], ["＿", null], ["＿", null], ["＿", null], ["。", null]], "停車場": [["停", "tíng"], ["車", "chē"], ["場", "chǎng"]], "這兩家店的飯糰一樣便宜，都是三十五塊。": [["這", "zhè"], ["兩", "liǎng"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["飯", "fàn"], ["糰", "tuán"], ["一", "yí"], ["樣", "yàng"], ["便", "pián"], ["宜", "yí"], ["，", null], ["都", "dōu"], ["是", "shì"], ["三", "sān"], ["十", "shí"], ["五", "wǔ"], ["塊", "kuài"], ["。", null]], "我在臺灣坐過船。": [["我", "wǒ"], ["在", "zài"], ["臺", "tái"], ["灣", "wān"], ["坐", "zuò"], ["過", "guo"], ["船", "chuán"], ["。", null]], "爸爸、媽媽和八歲的妹妹星期二去，一共多少錢？": [["爸", "bà"], ["爸", "ba"], ["、", null], ["媽", "mā"], ["媽", "ma"], ["和", "hé"], ["八", "bā"], ["歲", "suì"], ["的", "de"], ["妹", "mèi"], ["妹", "mei"], ["星", "xīng"], ["期", "qí"], ["二", "èr"], ["去", "qù"], ["，", null], ["一", "yí"], ["共", "gòng"], ["多", "duō"], ["少", "shǎo"], ["錢", "qián"], ["？", null]], "三百塊": [["三", "sān"], ["百", "bǎi"], ["塊", "kuài"]], "你的中文越來越好了。": [["你", "nǐ"], ["的", "de"], ["中", "zhōng"], ["文", "wén"], ["越", "yuè"], ["來", "lái"], ["越", "yuè"], ["好", "hǎo"], ["了", "le"], ["。", null]], "我＿＿沒坐過高鐵，下次放假想去試試看。": [["我", "wǒ"], ["＿", null], ["＿", null], ["沒", "méi"], ["坐", "zuò"], ["過", "guo"], ["高", "gāo"], ["鐵", "tiě"], ["，", null], ["下", "xià"], ["次", "cì"], ["放", "fàng"], ["假", "jià"], ["想", "xiǎng"], ["去", "qù"], ["試", "shì"], ["試", "shì"], ["看", "kàn"], ["。", null]], "我去過臺北。": [["我", "wǒ"], ["去", "qù"], ["過", "guo"], ["臺", "tái"], ["北", "běi"], ["。", null]], "V＋thời gian＋了": [["V", null], ["＋", null], ["t", null], ["h", null], ["ờ", null], ["i", null], [" ", null], ["g", null], ["i", null], ["a", null], ["n", null], ["＋", null], ["了", "le"]], "我學中文學了一年了。": [["我", "wǒ"], ["學", "xué"], ["中", "zhōng"], ["文", "wén"], ["學", "xué"], ["了", "le"], ["一", "yì"], ["年", "nián"], ["了", "le"], ["。", null]], "有的…，有的…": [["有", "yǒu"], ["的", "de"], ["…", null], ["，", null], ["有", "yǒu"], ["的", "de"], ["…", null]], "有的同學喜歡吃蛋餅，有的同學喜歡吃飯糰。": [["有", "yǒu"], ["的", "de"], ["同", "tóng"], ["學", "xué"], ["喜", "xǐ"], ["歡", "huān"], ["吃", "chī"], ["蛋", "dàn"], ["餅", "bǐng"], ["，", null], ["有", "yǒu"], ["的", "de"], ["同", "tóng"], ["學", "xué"], ["喜", "xǐ"], ["歡", "huān"], ["吃", "chī"], ["飯", "fàn"], ["糰", "tuán"], ["。", null]], "一點也不 · 不太 · 有一點 · 很 · 非常 ＋ Adj": [["一", "yì"], ["點", "diǎn"], ["也", "yě"], ["不", "bù"], [" ", null], ["·", null], [" ", null], ["不", "bú"], ["太", "tài"], [" ", null], ["·", null], [" ", null], ["有", "yǒu"], ["一", "yì"], ["點", "diǎn"], [" ", null], ["·", null], [" ", null], ["很", "hěn"], [" ", null], ["·", null], [" ", null], ["非", "fēi"], ["常", "cháng"], [" ", null], ["＋", null], [" ", null], ["A", null], ["d", null], ["j", null]], "我一點也不累。": [["我", "wǒ"], ["一", "yì"], ["點", "diǎn"], ["也", "yě"], ["不", "bú"], ["累", "lèi"], ["。", null]], "高雄的夏天非常熱。": [["高", "gāo"], ["雄", "xióng"], ["的", "de"], ["夏", "xià"], ["天", "tiān"], ["非", "fēi"], ["常", "cháng"], ["熱", "rè"], ["。", null]], "從A到B ＋ 怎麼去／要多久": [["從", "cóng"], ["A", null], ["到", "dào"], ["B", null], [" ", null], ["＋", null], [" ", null], ["怎", "zěn"], ["麼", "me"], ["去", "qù"], ["／", null], ["要", "yào"], ["多", "duō"], ["久", "jiǔ"]], "從宿舍到學校，騎腳踏車要十分鐘。": [["從", "cóng"], ["宿", "sù"], ["舍", "shè"], ["到", "dào"], ["學", "xué"], ["校", "xiào"], ["，", null], ["騎", "qí"], ["腳", "jiǎo"], ["踏", "tà"], ["車", "chē"], ["要", "yào"], ["十", "shí"], ["分", "fēn"], ["鐘", "zhōng"], ["。", null]], "A離B ＋ 很遠／很近": [["A", null], ["離", "lí"], ["B", null], [" ", null], ["＋", null], [" ", null], ["很", "hěn"], ["遠", "yuǎn"], ["／", null], ["很", "hěn"], ["近", "jìn"]], "我家離捷運站很近，走路只要五分鐘。": [["我", "wǒ"], ["家", "jiā"], ["離", "lí"], ["捷", "jié"], ["運", "yùn"], ["站", "zhàn"], ["很", "hěn"], ["近", "jìn"], ["，", null], ["走", "zǒu"], ["路", "lù"], ["只", "zhǐ"], ["要", "yào"], ["五", "wǔ"], ["分", "fēn"], ["鐘", "zhōng"], ["。", null]], "從…往…走／轉 · 先…然後…接著…最後…": [["從", "cóng"], ["…", null], ["往", "wǎng"], ["…", null], ["走", "zǒu"], ["／", null], ["轉", "zhuǎn"], [" ", null], ["·", null], [" ", null], ["先", "xiān"], ["…", null], ["然", "rán"], ["後", "hòu"], ["…", null], ["接", "jiē"], ["著", "zhe"], ["…", null], ["最", "zuì"], ["後", "hòu"], ["…", null]], "從二號出口出去，先往前走，接著往右轉。": [["從", "cóng"], ["二", "èr"], ["號", "hào"], ["出", "chū"], ["口", "kǒu"], ["出", "chū"], ["去", "qù"], ["，", null], ["先", "xiān"], ["往", "wǎng"], ["前", "qián"], ["走", "zǒu"], ["，", null], ["接", "jiē"], ["著", "zhe"], ["往", "wǎng"], ["右", "yòu"], ["轉", "zhuǎn"], ["。", null]], "V＋進／出／上／下／回／過＋來／去": [["V", null], ["＋", null], ["進", "jìn"], ["／", null], ["出", "chū"], ["／", null], ["上", "shàng"], ["／", null], ["下", "xià"], ["／", null], ["回", "huí"], ["／", null], ["過", "guò"], ["＋", null], ["來", "lái"], ["／", null], ["去", "qù"]], "老師在教室裡說：「請進來！」": [["老", "lǎo"], ["師", "shī"], ["在", "zài"], ["教", "jiào"], ["室", "shì"], ["裡", "lǐ"], ["說", "shuō"], ["：", null], ["「", null], ["請", "qǐng"], ["進", "jìn"], ["來", "lái"], ["！", null], ["」", null]], "你可以把書拿回去。": [["你", "nǐ"], ["可", "kě"], ["以", "yǐ"], ["把", "bǎ"], ["書", "shū"], ["拿", "ná"], ["回", "huí"], ["去", "qù"], ["。", null]], "把＋đồ vật＋V到＋nơi（＋來／去）": [["把", "bǎ"], ["＋", null], ["đ", null], ["ồ", null], [" ", null], ["v", null], ["ậ", null], ["t", null], ["＋", null], ["V", null], ["到", "dào"], ["＋", null], ["n", null], ["ơ", null], ["i", null], ["（", null], ["＋", null], ["來", "lái"], ["／", null], ["去", "qù"], ["）", null]], "要是…，(S)就…": [["要", "yào"], ["是", "shì"], ["…", null], ["，", null], ["(", null], ["S", null], [")", null], ["就", "jiù"], ["…", null]], "要是明天下雨，我就搭公車上學。": [["要", "yào"], ["是", "shì"], ["明", "míng"], ["天", "tiān"], ["下", "xià"], ["雨", "yǔ"], ["，", null], ["我", "wǒ"], ["就", "jiù"], ["搭", "dā"], ["公", "gōng"], ["車", "chē"], ["上", "shàng"], ["學", "xué"], ["。", null]], "越來越＋Adj＋了": [["越", "yuè"], ["來", "lái"], ["越", "yuè"], ["＋", null], ["A", null], ["d", null], ["j", null], ["＋", null], ["了", "le"]], "A跟B一樣(Adj)，都是…": [["A", null], ["跟", "gēn"], ["B", null], ["一", "yí"], ["樣", "yàng"], ["(", null], ["A", null], ["d", null], ["j", null], [")", null], ["，", null], ["都", "dōu"], ["是", "shì"], ["…", null]], "這兩家店的蛋餅一樣便宜，都是三十五塊。": [["這", "zhè"], ["兩", "liǎng"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["蛋", "dàn"], ["餅", "bǐng"], ["一", "yí"], ["樣", "yàng"], ["便", "pián"], ["宜", "yí"], ["，", null], ["都", "dōu"], ["是", "shì"], ["三", "sān"], ["十", "shí"], ["五", "wǔ"], ["塊", "kuài"], ["。", null]], "因為…，所以…": [["因", "yīn"], ["為", "wèi"], ["…", null], ["，", null], ["所", "suǒ"], ["以", "yǐ"], ["…", null]], "因為我沒帶零錢，所以只好給老闆一百塊。": [["因", "yīn"], ["為", "wèi"], ["我", "wǒ"], ["沒", "méi"], ["帶", "dài"], ["零", "líng"], ["錢", "qián"], ["，", null], ["所", "suǒ"], ["以", "yǐ"], ["只", "zhǐ"], ["好", "hǎo"], ["給", "gěi"], ["老", "lǎo"], ["闆", "bǎn"], ["一", "yì"], ["百", "bǎi"], ["塊", "kuài"], ["。", null]], "又…又…": [["又", "yòu"], ["…", null], ["又", "yòu"], ["…", null]], "這家店的豆漿又便宜又新鮮。": [["這", "zhè"], ["家", "jiā"], ["店", "diàn"], ["的", "de"], ["豆", "dòu"], ["漿", "jiāng"], ["又", "yòu"], ["便", "pián"], ["宜", "yí"], ["又", "yòu"], ["新", "xīn"], ["鮮", "xiān"], ["。", null]]};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+const store={get(k,d){try{const v=localStorage.getItem("rv-"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("rv-"+k,JSON.stringify(v))}catch(e){}}};
+/* ruby */
+function R(t){const r=RUBY[t];if(!r)return esc(t);return r.map(([c,p])=>p?`<span class="r"><i>${esc(p)}</i>${esc(c)}</span>`:`<span class="r p"><i>&nbsp;</i>${esc(c)}</span>`).join("")}
+/* speech */
+let VOICE=null;function pv(){try{const v=speechSynthesis.getVoices();VOICE=v.find(x=>/zh[-_]TW/i.test(x.lang))||v.find(x=>/^zh/i.test(x.lang))||null}catch(e){}}
+try{pv();speechSynthesis.onvoiceschanged=pv}catch(e){}
+function utt(t,pitch){const u=new SpeechSynthesisUtterance(t);u.lang="zh-TW";u.rate=.82*store.get("rate",1);u.pitch=pitch||1;if(VOICE)u.voice=VOICE;return u}
+function speak(t,pitch){try{speechSynthesis.cancel();speechSynthesis.speak(utt(t,pitch))}catch(e){}}
+const say=t=>`<button class="say" data-say="${esc(t)}" aria-label="Nghe">${SPK}</button>`;
+const L="ABCD";
+
+/* ---------- builders ---------- */
+const chapters=[];
+function chap(id,t,title,desc,blocks){chapters.push({id,t,title,blocks:blocks.map(b=>b.title)});return `<section class="chap" id="${id}"><header><span class="t">${t}</span><h2>${title}</h2><p>${desc}</p></header>${blocks.map(b=>b.html).join("")}</section>`}
+let bid=0;function blk(title,badges,min,how,inner){const id="b"+(++bid);return{title,html:`<article class="blk" id="${id}" data-title="${esc(title)}"><div class="hd">${badges}<h3>${title}</h3><span class="min">${min}</span></div>${how?`<p class="how">${how}</p>`:""}${inner}</article>`}}
+const B=(t,c="")=>`<span class="badge ${c}">${t}</span>`;
+function sent(zh,vi,cls="mid"){return `<div><div class="row" style="gap:12px;align-items:center"><span class="${cls}">${R(zh)}</span>${say(zh)}</div>${vi?`<div class="vi">${esc(vi)}</div>`:""}</div>`}
+function practice(items,opts={}){return `<div class="list">${items.map((x,i)=>`<div class="it"><span class="n">${i+1}</span><div class="body"><div class="${opts.cls||"mid"}">${R(x[0])}</div>${x.vi?`<div class="vi">${esc(x.vi)}</div>`:""}</div><div class="act">${opts.audio?say(x[0]):""}<button class="btn" data-ans>Đáp án</button></div><div class="ans" hidden>${R(x[1])}</div></div>`).join("")}</div>`}
+function mc(items,{listen=false,optsVi=false,showQ=true}={}){return `<div class="list">${items.map((x,i)=>{const [t,q,o,a]=x;return `<div class="it" data-mc="${a}"><span class="n">${i+1}</span><div class="body">${showQ&&q?`<div class="mid">${R(q)}</div>`:""}<div class="opts">${o.map((op,j)=>`<button class="opt ${optsVi?"vi-o":""}" data-j="${j}"><b>${L[j]}</b>${optsVi?esc(op):R(op)}</button>`).join("")}</div><div class="script" hidden>${R(t)}</div></div><div class="act">${listen?say(t):""}${listen?`<button class="btn" data-scr>Lời</button>`:""}<button class="btn" data-mcans>Đáp án</button></div></div>`}).join("")}</div>`}
+
+/* ---------- content ---------- */
+const D=DATA;
+const write=`<span class="badge r">Viết vào vở</span>`;
+const numPrac=(items,start=1,cls="mid")=>`<div class="list">${items.map((x,i)=>`<div class="it"><span class="n">${i+start}</span><div class="body"><div class="${cls}">${R(x[0])}</div></div><div class="act"><button class="btn" data-ans>Đáp án</button></div><div class="ans" hidden>${R(x[1])}</div></div>`).join("")}</div>`;
+const bank=w=>`<div class="bank">${w.map(x=>`<span>${R(x)}</span>`).join("")}</div>`;
+let html="";
+html+=`<div class="blk intro"><div class="hd"><span class="badge g">Ôn tập Buổi 1–3</span><h3>Bài ôn tập · 2 tiết</h3></div>
+<p class="how">Học sinh làm <b>vào vở</b>. Đầu trang ghi <b>họ tên, ngày, "Bài ôn tập Buổi 1–3"</b>. Mỗi phần ghi số phần, mỗi câu ghi số câu, <b>chép lại cả câu hoàn chỉnh</b>, không chỉ ghi đáp án.</p>
+<p class="how">Cô chiếu từng phần, bấm giờ, hết giờ mới bấm <b>Đáp án</b> để cả lớp tự chữa bằng bút màu.</p></div>`;
+html+=chap("t1","Tiết 1","詞彙 · 語法","Phần 1–4 · 50 phút",[
+ blk("Phần 1 · Chữ ↔ âm",write,"8 phút","Câu 1–5: viết pinyin <b>có dấu thanh</b>. Câu 6–10: viết chữ Hán.",
+  `<div class="list">${D.P1_PY.map((w,i)=>`<div class="it"><span class="n">${i+1}</span><div class="body"><div class="big" style="font-family:var(--f-kai)">${esc(w)}</div></div><div class="act"><button class="btn" data-ans>Đáp án</button></div><div class="ans" hidden>${(RUBY[w]||[]).map(x=>x[1]).join(" ")}</div></div>`).join("")}
+   ${D.P1_ZH.map((w,i)=>`<div class="it"><span class="n">${i+6}</span><div class="body"><div class="big" style="font-family:var(--f-ui);color:var(--blue)">${esc(w[0])}</div></div><div class="act"><button class="btn" data-ans>Đáp án</button></div><div class="ans" hidden>${esc(w[1])}</div></div>`).join("")}</div>`),
+ blk("Phần 2 · Chọn từ điền vào câu",write,"10 phút","Chọn từ trong khung, chép cả câu vào vở. Mỗi từ dùng 1 lần, <b>có 2 từ thừa</b>.",
+  bank(D.P2_BANK)+numPrac(D.P2)),
+ blk("Ôn lý thuyết ngữ pháp Buổi 1–3",`<span class="badge b">Lý thuyết</span>`,"10 phút","Cô đi nhanh từng mẫu: đọc công thức, cả lớp đọc câu ví dụ, nhắc lỗi hay sai. Học sinh <b>không cần chép</b>, chỉ nghe và đọc theo; làm phần 3–5 có thể nhìn lại mục này.",
+  `<div class="thgrid">${D.THEORY.map((t,i)=>`<div class="th"><div class="row" style="gap:8px"><span class="n2">${i+1}</span><span class="tf">${R(t[0])}</span></div><div class="tv">${esc(t[1])}</div>${t[2].map(e=>`<div class="row" style="gap:8px;align-items:center"><span class="te">${R(e)}</span>${say(e)}</div>`).join("")}<div class="tw">${esc(t[3])}</div></div>`).join("")}</div>`),
+ blk("Phần 3 · Sắp xếp thành câu",write,"10 phút","Sắp xếp các từ thành câu đúng, nhớ thêm dấu câu.",numPrac(D.P3)),
+ blk("Phần 4 · Hoàn thành câu",write,"10 phút","Viết tiếp cho đủ câu, nội dung về <b>em</b>. Đáp án là câu ví dụ, em viết khác vẫn đúng nếu đúng ngữ pháp.",numPrac(D.P4))
+]);
+html+=chap("t2","Tiết 2","閱讀 · 寫作","Phần 5–8 · 50 phút",[
+ blk("Phần 5 · Đặt câu",write,"10 phút","Mỗi mẫu đặt <b>1 câu mới</b>. Không chép lại câu ví dụ, chép ví dụ thì không có điểm.",
+  `<div class="list">${D.P5.map((x,i)=>`<div class="it"><span class="n">${i+1}</span><div class="body"><div class="mid" style="font-weight:700;color:var(--red)">${R(x[0])}</div><div class="how">Ví dụ: <span class="zh">${R(x[1])}</span></div></div></div>`).join("")}</div>`),
+ blk("Phần 6 · Đọc đoạn văn, điền từ",write,"12 phút","Đọc đoạn văn, chọn từ trong khung cho 8 chỗ trống. Có <b>2 từ thừa</b>. Trong vở chỉ cần ghi (1)～(8) và từ.",
+  bank(D.P6_BANK)+`<div class="passage">${R(D.P6_TEXT)}</div><div class="row"><button class="btn" id="p6-ans">Đáp án</button><span class="ans" id="p6-out" hidden>${D.P6_ANS.map((w,i)=>`(${i+1}) ${R(w)}`).join("　")}</span></div>`),
+ blk("Phần 7 · Đọc bảng giá vé",write,"13 phút","Đọc bảng giá vé, chọn đáp án đúng. Ghi số câu và chữ A/B/C/D vào vở, câu nào có tính thì ghi cả phép tính.",
+  `<div class="board"><div><h4>${esc("高雄遊樂園 · 門票")}</h4><table>${D.P7_TABLE.map(r=>`<tr><td>${esc(r[0])}</td><td class="p">${esc(r[1])}</td></tr>`).join("")}</table></div>
+   <div class="promo">${D.P7_NOTE.map(n=>`<span>${esc(n)}</span>`).join("")}</div></div>`+mc(D.P7.map(c=>["",c[0],c[1],c[2]]))),
+ blk("Phần 8 · Viết đoạn văn: 我在臺灣的生活",write,"15 phút","Viết <b>8–10 câu</b> theo khung 5 phần. Dùng ít nhất <b>4 cấu trúc</b>: V過 · thời gian＋了 · 從A到B · A離B · 從…往… · 要是…就… · 跟…一樣(Adj)，都是… · 因為…所以… · 又…又…",
+  `<div class="frame">${D.P8_FRAME.map(f=>`<div class="f"><b>${esc(f[0])}</b><span class="mid">${R(f[1])}</span></div>`).join("")}</div>`)
+]);
+
+$("#main").innerHTML=html;
+$("#p6-ans").onclick=()=>{$("#p6-out").hidden=!$("#p6-out").hidden};
+
+$$(".say").forEach(b=>{if(!b.innerHTML)b.innerHTML=SPK});
+
+/* nav */
+const navHtml=chapters.map(c=>`<h4>${c.t}</h4><a href="#${c.id}">${c.title}</a>`+[...document.querySelectorAll(`#${c.id} .blk`)].map(b=>`<a href="#${b.id}" style="padding-left:18px">${b.dataset.title}</a>`).join("")).join("");
+$("#rail").innerHTML=navHtml;
+$("#chips").innerHTML=chapters.map(c=>`<a href="#${c.id}">${c.t} · ${c.title}</a>`).join("");
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$("#rail a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id))}}),{rootMargin:"-30% 0px -60% 0px"});
+$$(".blk").forEach(b=>io.observe(b));
+
+/* toggles */
+function tg(id,cls,key){const b=$(id);let on=store.get(key,true);const ap=()=>{document.body.classList.toggle(cls,!on);b.setAttribute("aria-pressed",on)};b.onclick=()=>{on=!on;store.set(key,on);ap()};ap()}
+tg("#t-py","nopy","py");tg("#t-vi","novi","vi");
+let z=store.get("z",1);const az=()=>{document.documentElement.style.setProperty("--z",z);store.set("z",z)};az();
+$("#t-sm").onclick=()=>{z=Math.max(.75,+(z-.1).toFixed(2));az()};$("#t-lg").onclick=()=>{z=Math.min(1.6,+(z+.1).toFixed(2));az()};
+
+/* clicks */
+document.addEventListener("click",e=>{
+  const s=e.target.closest("[data-say]");if(s){speak(s.dataset.say);return}
+  const a=e.target.closest("[data-ans]");if(a){const x=a.closest(".it").querySelector(".ans");x.hidden=!x.hidden;a.textContent=x.hidden?a.dataset.l:"Ẩn";return}
+  const sc=e.target.closest("[data-scr]");if(sc){const x=sc.closest(".it").querySelector(".script");x.hidden=!x.hidden;return}
+  const o=e.target.closest(".opt");if(o){const it=o.closest("[data-mc]");const ok=+o.dataset.j===+it.dataset.mc;o.classList.add(ok?"ok":"no");return}
+  const m=e.target.closest("[data-mcans]");if(m){const it=m.closest("[data-mc]");it.querySelector(`.opt[data-j="${it.dataset.mc}"]`).classList.add("ok");return}
+});
+$$("[data-ans]").forEach(b=>b.dataset.l=b.textContent);
+
+/* popovers */
+const open=id=>{$$(".pop").forEach(p=>p.hidden=p.id!==id?true:!p.hidden)};
+$("#t-pick").onclick=()=>open("p-pick");$("#t-clock").onclick=()=>open("p-clock");
+$$("[data-open]").forEach(b=>b.addEventListener("click",()=>open("p-"+b.dataset.open)));
+$$("[data-x]").forEach(b=>b.onclick=()=>b.closest(".pop").hidden=true);
+let pool=[];const pReset=()=>{const n=Math.max(2,Math.min(60,+$("#pmax").value||30));pool=Array.from({length:n},(_,i)=>i+1);$("#pnum").textContent="—";$("#pleft").textContent=`Còn ${pool.length} số`};
+$("#preset").onclick=pReset;$("#pmax").onchange=pReset;pReset();
+$("#pgo").onclick=()=>{if(!pool.length)pReset();let c=0;const n=+$("#pmax").value||30;const iv=setInterval(()=>{$("#pnum").textContent=1+Math.floor(Math.random()*n);if(++c>12){clearInterval(iv);const v=pool.splice(Math.floor(Math.random()*pool.length),1)[0];$("#pnum").textContent=v;$("#pleft").textContent=`Còn ${pool.length} số`}},55)};
+let tLeft=0,tTot=0,tInt=null;const fmt=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+const tDraw=()=>{$("#clock").textContent=fmt(tLeft);$("#mini").textContent=tTot?fmt(tLeft):"--:--";$("#clock").classList.toggle("low",tTot&&tLeft<=10)};
+function beep(){try{const A=new (window.AudioContext||window.webkitAudioContext)();[0,.35,.7].forEach(t=>{const o=A.createOscillator(),g=A.createGain();o.frequency.value=880;o.connect(g);g.connect(A.destination);g.gain.setValueAtTime(.25,A.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,A.currentTime+t+.3);o.start(A.currentTime+t);o.stop(A.currentTime+t+.3)})}catch(e){}}
+const tStart=s=>{if(s!=null){tTot=s;tLeft=s}clearInterval(tInt);tInt=setInterval(()=>{tLeft--;if(tLeft<=0){tLeft=0;clearInterval(tInt);tInt=null;beep()}tDraw()},1000);tDraw()};
+$("#presets").innerHTML=[30,60,180,300,600,900,1200].map(s=>`<button class="btn" data-t="${s}">${s<60?s+"s":s/60+"′"}</button>`).join("");
+document.addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(b&&b.closest(".pop,.blk")){tStart(+b.dataset.t);$("#p-clock").hidden=false;$("#p-pick").hidden=true}});
+$("#cgo").onclick=()=>tStart(tLeft>0?null:tTot||60);$("#cpause").onclick=()=>{clearInterval(tInt);tInt=null};tDraw();
+</script>
+
+</body></html>
